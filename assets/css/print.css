@@ -95,6 +95,7 @@
 .doc--full .index { columns: 3; column-gap: 6mm; font: 400 8pt/1.5 var(--font-sans); }
 .doc--full .langs { display: grid; grid-template-columns: max-content 1fr; gap: .5mm 6mm; font: 400 8pt/1.5 var(--font-sans); }
 .doc--full .langs dd { color: #555; margin: 0; }
+.doc--full .langs, .doc--full .index { break-inside: avoid; }
 .doc--full .lang { display: contents; }
 .doc--full .masthead { break-inside: avoid; }
 .doc--full .section-head, .doc--full .entry-head, .doc--full .entry-when, .doc--full .entry-sub { break-after: avoid; }

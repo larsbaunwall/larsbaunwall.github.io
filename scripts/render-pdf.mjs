@@ -7,6 +7,9 @@ import { chromium } from "playwright";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const publicDir = path.resolve(root, process.env.PUBLIC_DIR || "public");
 
+// Full CV: try 100% first, then up to ~6% smaller; keep the largest scale that gives the fewest pages.
+const SHRINK_SCALES = [1, 0.985, 0.97, 0.955, 0.94];
+
 const TARGETS = [
   {
     name: "full",
@@ -14,6 +17,9 @@ const TARGETS = [
     out: "lars-baunwall-cv.pdf",
     pages: { warnOutside: [2, 4], failAbove: 6 },
     maxKB: 600,
+    // Layout differs slightly between OSes/Chromium builds; if shrinking the content a few percent
+    // saves a page (typically an orphaned last line), take it.
+    shrink: true,
   },
   {
     name: "onepage",
@@ -163,6 +169,14 @@ async function renderTarget(browser, base, target, external) {
         }
       }
       if (!fitted) throw new Error(OVERFLOW_MSG);
+    } else if (target.shrink) {
+      let best = null;
+      for (const s of SHRINK_SCALES) {
+        const b = await pdfBuffer(page, s);
+        const n = countPages(b);
+        if (!best || n < best.pages) best = { buffer: b, pages: n, scale: s };
+      }
+      ({ buffer, pages, scale } = best);
     } else {
       buffer = await pdfBuffer(page);
       pages = countPages(buffer);
