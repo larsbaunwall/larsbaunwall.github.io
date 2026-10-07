@@ -9,7 +9,7 @@
     "fetch": "bash scripts/fetch-cv.sh",
     "fetch:sample": "bash scripts/fetch-cv.sh --sample",
     "normalize": "node scripts/normalize-cv.mjs",
-    "test": "node --test scripts/",
+    "test": "node --test scripts/*.test.mjs",
     "dev": "hugo server --disableFastRender",
     "build": "hugo --minify",
     "pdf": "node scripts/render-pdf.mjs",
