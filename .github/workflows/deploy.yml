@@ -6,7 +6,7 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    - cron: "0 23 * * 0"   # Sundays 23:00 UTC = 00:00 CET / 01:00 CEST (Monday)
+    - cron: "0 0 * * *"   # daily at 00:00 UTC (01:00 CET / 02:00 CEST)
 
 permissions:
   contents: read

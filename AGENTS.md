@@ -61,6 +61,8 @@ cp .env.example .env              # then put your LinkedIn token in .env
 - **Always fresh:** `--no-cache` neither reads nor writes unlinked's disk cache, and the script also exports `UNLINKED_CACHE_TTL=0`. (`--refresh` would ignore the cache but still write it; it is not needed.)
 - **Recent edits are included:** unlinked merges LinkedIn's last 28 days of changes into the export. The output's `freshness` block reports `asOf`, `recentChangesMerged`, `pendingEdits` (sections with edits the export does not show yet) and `empty` sections.
 - **Guards:** the script fails (and writes no data) if `intro` has no name or if `experience` or `skills` is empty. LinkedIn can return a section empty while it is still preparing the export (up to 24 hours after consent), and a CV that silently lost its experience must not be published. It prints a `::warning::` if `pendingEdits` is non-empty and lists empty sections.
+- **Rate limits (important):** LinkedIn limits the changelog call per application and member per day. Every `unlinked profile` call (and so every push-triggered CI run and every local `npm run fetch`) uses some of that quota. When it is exhausted, unlinked still exits 0 but returns the older export without the last 28 days of edits and sets `freshness.recentChangesError` and `recentChangesMerged: 0`. The script treats that as a failure (nothing is written) so a stale CV is never published silently; set `ALLOW_STALE_CV=1` to accept it locally. The quota resets daily, so re-run later. Avoid ad-hoc `unlinked activity` calls and bursts of pushes.
+- **What unlinked can merge:** recent edits to the intro (headline, About, name) and to posts, comments and reactions are merged from the changelog. Edits to profile sections (experience, projects, skills, ...) cannot be merged because LinkedIn rows have no ids; they only appear once LinkedIn's snapshot export catches up, and unlinked lists such sections in `freshness.pendingEdits` (the script warns). Removals of entries are not flagged at all, so a deleted project can linger until the snapshot refreshes.
 - **Output is limited to counts and freshness:** it never prints CV contents or the token. unlinked's own errors are JSON on stderr (exit 1 for LinkedIn or token problems, 2 for usage errors).
 - `@larsbaunwall/unlinked` is pinned to an exact version in `package.json` so the pipeline cannot change silently.
 
@@ -158,7 +160,7 @@ PDFs contain a creation timestamp, so they are not byte-identical between runs; 
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds and deploys on every push to `main`, manually (`workflow_dispatch`), and every Sunday at 23:00 UTC (GitHub cron is UTC-only). The runner is pinned to `ubuntu-24.04` (not `ubuntu-latest`) for reproducibility.
+`.github/workflows/deploy.yml` builds and deploys on every push to `main`, manually (`workflow_dispatch`), and every day at 00:00 UTC (GitHub cron is UTC-only). The runner is pinned to `ubuntu-24.04` (not `ubuntu-latest`) for reproducibility.
 
 Build steps: checkout, setup-node (from `.nvmrc`), `npm ci`, `npm test`, fetch (the only step that receives `LINKEDIN_TOKEN`; it also normalises), setup Hugo (`HUGO_VERSION` in the workflow env), configure-pages, `hugo --minify --gc --baseURL <pages url>`, `npx playwright install --with-deps chromium`, `npm run pdf`, output checks (both PDFs non-empty and starting with `%PDF-`, `noindex` present on the one-page print page), upload artifact, deploy.
 

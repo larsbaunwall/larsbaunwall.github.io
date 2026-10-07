@@ -46,6 +46,11 @@ const n = (k) => (Array.isArray(d[k]) ? d[k].length : 0);
 // (up to 24h after consent). Refuse to publish a CV that lost its core sections.
 for (const k of ["experience", "skills"]) if (n(k) === 0) fail(k + " is empty (LinkedIn may still be preparing the data)");
 const f = d.freshness || {};
+// If the changelog call fails (e.g. a daily rate limit), unlinked still exits 0 but returns the older
+// export WITHOUT the last 28 days of edits (headline, About, ...). Never publish that silently.
+if (f.recentChangesError && process.env.ALLOW_STALE_CV !== "1") {
+  fail("LinkedIn could not provide recent changes, so edits from the last 28 days may be missing: " + f.recentChangesError + " (set ALLOW_STALE_CV=1 to accept the older export)");
+}
 console.log(`CV fetched: ${n("experience")} positions, ${n("education")} education, ${n("skills")} skills (asOf ${f.asOf || "unknown"}, ${f.recentChangesMerged ?? 0} recent changes merged)`);
 const pending = Array.isArray(f.pendingEdits) ? f.pendingEdits : [];
 if (pending.length) console.log(`::warning::LinkedIn has recent edits not yet in the export for: ${pending.join(", ")}`);
