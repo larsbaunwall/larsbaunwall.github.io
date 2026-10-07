@@ -33,7 +33,7 @@
 
 {{- with $cv.publications }}
   {{- $body := "" -}}
-  {{- range . }}{{ $body = printf "%s%s" $body (partial "cv/entry.html" (dict "title" .name "url" .url "sub" .publisher "when" .when.label)) }}{{ end -}}
+  {{- range . }}{{ $body = printf "%s%s" $body (partial "cv/entry.html" (dict "title" .name "url" .url "sub" .publisher "when" .when.label "blocks" .blocks "facts" .facts)) }}{{ end -}}
   {{ partial "cv/section.html" (dict "key" "publications" "label" "Publications" "body" ($body | safeHTML)) }}
 {{- end -}}
 

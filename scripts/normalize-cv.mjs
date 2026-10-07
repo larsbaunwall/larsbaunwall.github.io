@@ -245,6 +245,9 @@ export function normalize(input, overridesIn) {
   for (const p of Array.isArray(cv.publications) ? cv.publications : []) {
     const d = parseDate(p.publishedOn);
     p.when = { label: d ? d.label : "", years: d ? d.year ?? d.label : "", startIso: d ? d.iso : null };
+    const { blocks, facts } = toBlocks(p.description);
+    p.blocks = blocks;
+    p.facts = facts;
   }
 
   // other dated sections: add when/blocks/facts without touching raw fields

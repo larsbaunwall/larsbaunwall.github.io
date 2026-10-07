@@ -175,3 +175,29 @@ test("idempotent: normalising twice equals once", () => {
   assert.deepEqual(normalize(once), once);
   assert.equal(JSON.stringify(normalize(once)), JSON.stringify(once));
 });
+
+test("every free-text section is structured into paragraphs and lists", () => {
+  const T = "Intro sentence.  Second paragraph.  – Item one  – Item two  Stack: A, B";
+  const cv = {
+    intro: { firstName: "A", lastName: "B", headline: "H", about: T },
+    experience: [{ companyName: "X", title: "T", startedOn: "Jan 2020", description: T }],
+    education: [{ schoolName: "S", degreeName: "D", startDate: "2010", endDate: "2012", notes: T, activities: T }],
+    projects: [{ title: "P", startedOn: "Jan 2021", description: T }],
+    publications: [{ name: "Pub", publishedOn: "Mar 1, 2026", description: T }],
+    certifications: [{ name: "C", startedOn: "Jan 2020", description: T }],
+    volunteering: [{ role: "V", startedOn: "Jan 2020", description: T }],
+    honors: [{ title: "H", issuedOn: "Mar 2021", description: T }],
+    courses: [{ name: "Co", description: T }],
+    organizations: [{ name: "O", startedOn: "2018", description: T }],
+  };
+  const out = normalize(cv);
+  const ok = (blocks, where) => {
+    assert.ok(blocks && blocks.length >= 2, where + ": expected several blocks");
+    assert.ok(blocks.some((b) => b.type === "ul" && b.items.length === 2), where + ": expected a 2-item list");
+  };
+  ok(out.intro.aboutBlocks, "about");
+  for (const k of ["experience", "education", "projects", "publications", "certifications", "volunteering", "honors", "courses", "organizations"]) {
+    ok(out[k][0].blocks, k);
+    assert.ok(out[k][0].facts.length >= 1, k + ": expected a Stack fact");
+  }
+});

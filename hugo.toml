@@ -22,7 +22,10 @@ enableRobotsTXT = true
 
 [imaging]
   resampleFilter = "Lanczos"
-  quality = 82
+  [imaging.jpeg]
+    quality = 82
+  [imaging.webp]
+    quality = 82
 
 [module]
   [[module.mounts]]

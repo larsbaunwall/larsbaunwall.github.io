@@ -4,8 +4,8 @@ A static CV built with Hugo and published to GitHub Pages at https://larsbaunwal
 
 ## Prerequisites
 
-- Hugo 0.163 extended
-- Node 22+ (see `.nvmrc`)
+- Hugo 0.167 extended
+- Node 26+ (see `.nvmrc`)
 
 ```bash
 npm install
