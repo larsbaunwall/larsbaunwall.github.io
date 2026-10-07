@@ -112,6 +112,7 @@ Committed, at the repo root. Every field is optional.
 - CSS: `assets/css/base.css` (tokens, fonts, globals), `screen.css` (screen layout, wrapped in `@media screen`), `print.css` (both PDFs, plus a fallback so printing the home page with Cmd+P is reasonable).
 - `cv/masthead.html` and `cv/sections.html` take `dict "cv" $cv "media" "print"` so the print pages can reuse them.
 - Print pages (`content/print/*.md`, `layouts/print/*.html`) are standalone templates with their own head partial (`print/head.html`), so `screen.css` never leaks into them. They are `noindex` and excluded from the sitemap. `@page` rules are inline `<style>` blocks in the templates because they carry dynamic text.
+- **Dark theme:** CSS-only, follows the system setting (`prefers-color-scheme`), no toggle (the site has no JavaScript). The tokens are overridden at the end of `screen.css` inside `@media screen and (prefers-color-scheme: dark)`, so the PDFs and print pages always stay on white paper. Dark palette: paper `#0F0F0F`, ink `#ECECEA` (16.2:1), secondary `#A3A3A0` (7.6:1), the portrait is dimmed slightly, and the favicon adapts. Use the colour tokens, never hard-coded colours, in screen styles.
 - The footer (`cv/colophon.html`, screen only) shows the update date and discreet links to unlinked and this repository. Keep it quiet; it is the intended place to credit unlinked.
 - Hyphenation is manual except below 30rem; hyphen-joined tokens containing a digit (e.g. "200-engineer") are wrapped in `.nb` so they never break; define `.nb` in print CSS too.
 

@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ if .Title }}{{ if eq .Kind "home" }}{{ $name }} — Curriculum Vitae{{ else }}{{ .Title }}{{ end }}{{ else }}{{ $name }} — Curriculum Vitae{{ end }}</title>
 <meta name="description" content="{{ site.Params.description }}">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
 {{ if .Params.noindex }}<meta name="robots" content="noindex">
 {{ end -}}
 <link rel="canonical" href="{{ site.Home.Permalink }}">
