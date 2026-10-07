@@ -1,0 +1,20 @@
+{{- $prev := "\x00" -}}
+{{- $n := len . -}}
+{{- range $i, $r := . -}}
+  {{- $co := $r.companyName | default "" -}}
+  {{- if ne $co $prev -}}
+    {{- if gt $i 0 }}</article>{{ end }}
+<article class="org">
+  {{ with $co }}<h3 class="org-name">{{ . }}</h3>{{ end }}
+  {{- $prev = $co -}}
+  {{- end }}
+  <div class="role">
+    <div class="role-head">
+      <span class="role-title">{{ $r.title }}</span>
+      <span class="dates">{{ partial "cv/date-range.html" $r }}</span>
+    </div>
+    {{ with $r.location }}<p class="role-meta">{{ . }}</p>{{ end }}
+    {{ with $r.description }}<div class="role-desc">{{ partial "cv/paragraphs.html" . }}</div>{{ end }}
+  </div>
+{{- end }}
+</article>

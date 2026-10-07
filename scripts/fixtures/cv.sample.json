@@ -1,0 +1,188 @@
+{
+  "intro": {
+    "firstName": "Ada",
+    "lastName": "Synthetic",
+    "headline": "Engineering leader building calm, reliable software",
+    "about": "I lead teams that turn ambiguous problems into dependable products.\n\nOver two decades I have moved between hands-on engineering and leadership, always favouring clear writing and small, steady steps.\n\nThis profile is synthetic sample data used for development.",
+    "industry": "Software Development",
+    "geoLocation": "Copenhagen, Denmark"
+  },
+  "experience": [
+    {
+      "companyName": "Northwind Labs",
+      "title": "VP Engineering",
+      "description": "Lead a 60-person engineering organisation across four product areas.\n• Reduced incident count by 40% through an on-call overhaul\n• Introduced quarterly written planning\n- Grew senior hiring pipeline",
+      "location": "Copenhagen, Denmark",
+      "startedOn": "Jan 2022"
+    },
+    {
+      "companyName": "Northwind Labs",
+      "title": "Director of Engineering",
+      "description": "Managed three teams building the core platform.\n\nOwned the migration from a monolith to services.",
+      "location": "Copenhagen, Denmark",
+      "startedOn": "Mar 2018",
+      "finishedOn": "Dec 2021"
+    },
+    {
+      "companyName": "Contoso Systems",
+      "title": "Principal Engineer",
+      "description": "Designed event-driven ingestion handling 2B events per day.\n* Mentored eight engineers\n* Wrote the internal architecture guidelines",
+      "startedOn": "Jun 2012",
+      "finishedOn": "Feb 2018"
+    },
+    {
+      "companyName": "Fabrikam Consulting",
+      "title": "Senior Consultant",
+      "location": "Aarhus, Denmark",
+      "startedOn": "Sep 2008",
+      "finishedOn": "May 2012"
+    },
+    {
+      "companyName": "Tailspin Toys",
+      "title": "Software Developer",
+      "description": "Built internal tooling and an early e-commerce back office.",
+      "startedOn": "Aug 2004",
+      "finishedOn": "Aug 2008"
+    }
+  ],
+  "education": [
+    {
+      "schoolName": "Synthetic University",
+      "degreeName": "MSc, Computer Science",
+      "startDate": "2000",
+      "endDate": "2004",
+      "notes": "Thesis on distributed consensus."
+    },
+    {
+      "schoolName": "Example Gymnasium",
+      "startDate": "1997",
+      "endDate": "2000"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Product strategy"
+    },
+    {
+      "name": "Systems thinking"
+    },
+    {
+      "name": "Technical leadership"
+    },
+    {
+      "name": "Software architecture"
+    },
+    {
+      "name": "Distributed systems"
+    },
+    {
+      "name": "Cloud platforms"
+    },
+    {
+      "name": "Data modelling"
+    },
+    {
+      "name": "API design"
+    },
+    {
+      "name": "Team coaching"
+    },
+    {
+      "name": "Hiring"
+    },
+    {
+      "name": "Roadmapping"
+    },
+    {
+      "name": "Stakeholder management"
+    },
+    {
+      "name": "Python"
+    },
+    {
+      "name": "TypeScript"
+    },
+    {
+      "name": "Go"
+    },
+    {
+      "name": "SQL"
+    },
+    {
+      "name": "Observability"
+    },
+    {
+      "name": "Security basics"
+    },
+    {
+      "name": "Accessibility"
+    },
+    {
+      "name": "Technical writing"
+    },
+    {
+      "name": "Public speaking"
+    },
+    {
+      "name": "Mentoring"
+    },
+    {
+      "name": "Agile delivery"
+    },
+    {
+      "name": "Experimentation"
+    },
+    {
+      "name": "Cost optimisation"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Certified Cloud Architect",
+      "authority": "Example Cloud",
+      "url": "https://example.com/cert/1",
+      "startedOn": "Apr 2020"
+    },
+    {
+      "name": "Professional Scrum Master",
+      "authority": "Example Agile Org",
+      "startedOn": "Nov 2016",
+      "finishedOn": "Nov 2019"
+    },
+    {
+      "name": "Security Fundamentals",
+      "authority": "Example Security Institute"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Open Ledger",
+      "description": "A small open source double-entry ledger library.",
+      "url": "https://example.com/open-ledger",
+      "startedOn": "Feb 2019"
+    },
+    {
+      "title": "Field Notes",
+      "description": "A personal blog about engineering management.",
+      "startedOn": "Jan 2015",
+      "finishedOn": "Dec 2017"
+    }
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "proficiency": "Full professional proficiency"
+    },
+    {
+      "name": "Danish",
+      "proficiency": "Native or bilingual proficiency"
+    },
+    {
+      "name": "German",
+      "proficiency": "Elementary proficiency"
+    }
+  ],
+  "freshness": {
+    "asOf": "2026-01-15T08:00:00Z"
+  }
+}

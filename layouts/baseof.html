@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "en" }}">
+<head>
+{{ partial "head.html" . }}
+</head>
+<body>
+<main class="cv">
+{{ block "main" . }}{{ end }}
+</main>
+{{ with hugo.Data.cv }}{{ with .freshness }}{{ with .asOf }}{{ with try (time.AsTime .) }}{{ with .Value }}
+<footer class="site-footer"><p>Updated {{ time.Format "2 January 2006" . }}</p></footer>
+{{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
+</body>
+</html>

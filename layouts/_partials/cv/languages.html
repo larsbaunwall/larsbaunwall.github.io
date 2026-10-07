@@ -1,0 +1,5 @@
+<ul class="languages">
+{{- range . }}
+  <li><span class="lang-name">{{ .name }}</span>{{ with .proficiency }} <span class="lang-level">— {{ . }}</span>{{ end }}</li>
+{{- end }}
+</ul>

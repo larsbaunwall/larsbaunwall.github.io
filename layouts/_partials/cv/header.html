@@ -1,0 +1,11 @@
+{{ with .intro }}
+<header class="cv-header">
+  <h1 class="name">{{ trim (printf "%s %s" (.firstName | default "") (.lastName | default "")) " " | default site.Title }}</h1>
+  {{ with .headline }}<p class="headline">{{ . }}</p>{{ end }}
+  {{ $bits := slice }}
+  {{ with .geoLocation }}{{ $bits = $bits | append (. | htmlEscape) }}{{ end }}
+  {{ range site.Params.links }}{{ $bits = $bits | append (printf `<a href="%s">%s</a>` (.url | htmlEscape) (.label | htmlEscape)) }}{{ end }}
+  <p class="meta">{{ delimit $bits " · " | safeHTML }}</p>
+  <p class="download-wrap"><a class="download" href="/{{ site.Params.pdfFile }}" download>Download PDF <span aria-hidden="true">↓</span></a></p>
+</header>
+{{ end }}

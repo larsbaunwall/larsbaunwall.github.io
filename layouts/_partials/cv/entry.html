@@ -1,0 +1,13 @@
+{{- $primary := .degreeName | default .name | default .title | default .schoolName | default .companyName | default "" -}}
+{{- $secondary := .schoolName | default .authority | default .companyName | default .publisher | default .issuer | default "" -}}
+{{- if eq $secondary $primary }}{{ $secondary = "" }}{{ end -}}
+{{- $text := .notes | default .description -}}
+<div class="entry">
+  <div class="role-head">
+    <span class="entry-primary">{{ with .url }}<a href="{{ . }}">{{ $primary }}</a>{{ else }}{{ $primary }}{{ end }}</span>
+    <span class="dates">{{ partial "cv/date-range.html" . }}</span>
+  </div>
+  {{ with $secondary }}<p class="role-meta">{{ . }}</p>{{ end }}
+  {{ with $text }}<div class="role-desc">{{ partial "cv/paragraphs.html" . }}</div>{{ end }}
+  {{ with .activities }}<div class="role-desc">{{ partial "cv/paragraphs.html" . }}</div>{{ end }}
+</div>

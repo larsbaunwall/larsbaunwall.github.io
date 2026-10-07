@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+node_modules/
+public/
+resources/_gen/
+.hugo_build.lock
+data/cv.json
+*.pdf

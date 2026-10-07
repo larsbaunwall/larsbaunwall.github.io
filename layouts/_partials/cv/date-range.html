@@ -1,0 +1,7 @@
+{{- $s := .startedOn | default .startDate -}}
+{{- $e := .finishedOn | default .endDate -}}
+{{- if $s -}}
+{{ $s }}&#8239;–&#8239;{{ $e | default "Present" }}
+{{- else if $e -}}
+{{ $e }}
+{{- end -}}

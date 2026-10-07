@@ -1,0 +1,26 @@
+baseURL = "https://larsbaunwall.github.io/"
+locale = "en"
+title = "Lars Baunwall"
+disableKinds = ["taxonomy", "term", "RSS", "section"]
+enableRobotsTXT = true
+
+[params]
+  description = "Curriculum vitae of Lars Baunwall"
+  pdfFile = "lars-baunwall-cv.pdf"
+  [[params.links]]
+    label = "LinkedIn"
+    url = "https://www.linkedin.com/in/larsbaunwall/"
+  [[params.links]]
+    label = "GitHub"
+    url = "https://github.com/larsbaunwall"
+
+[module]
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "node_modules/@fontsource-variable/source-serif-4/files"
+    target = "static/fonts/source-serif-4"
+  [[module.mounts]]
+    source = "node_modules/@fontsource-variable/inter/files"
+    target = "static/fonts/inter"

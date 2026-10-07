@@ -1,0 +1,78 @@
+name: Build and deploy CV site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * 1"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: "0.163.0"
+      HUGO_ENVIRONMENT: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Fetch CV from LinkedIn
+        env:
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+          UNLINKED_CACHE_TTL: "0"
+        run: npm run fetch
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - run: hugo --minify --gc --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run pdf
+
+      - name: Check outputs
+        run: |
+          test -s public/index.html
+          test -s public/lars-baunwall-cv.pdf
+          head -c 5 public/lars-baunwall-cv.pdf | grep -q '%PDF-'
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

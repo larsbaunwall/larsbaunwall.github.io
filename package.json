@@ -1,0 +1,22 @@
+{
+  "name": "larsbaunwall-cv",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "fetch": "bash scripts/fetch-cv.sh",
+    "fetch:sample": "bash scripts/fetch-cv.sh --sample",
+    "dev": "hugo server --disableFastRender",
+    "build": "hugo --minify",
+    "pdf": "node scripts/render-pdf.mjs",
+    "all": "npm run fetch && npm run build && npm run pdf"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@larsbaunwall/unlinked": "2.0.0",
+    "playwright": "^1.63.0"
+  }
+}

@@ -1,0 +1,2 @@
+{{- $names := slice -}}{{- range . }}{{ with .name }}{{ $names = $names | append (. | htmlEscape) }}{{ end }}{{ end -}}
+<p class="skills">{{ delimit $names " · " | safeHTML }}</p>
