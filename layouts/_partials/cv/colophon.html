@@ -1,3 +1,8 @@
+{{- $updated := "" -}}
 {{- with hugo.Data.cv }}{{ with .freshness }}{{ with .asOf }}{{ with try (time.AsTime .) }}{{ with .Value -}}
-<footer class="colophon"><p>Updated {{ time.Format "2 January 2006" . }}</p></footer>
+{{- $updated = time.Format "2 January 2006" . -}}
 {{- end }}{{ end }}{{ end }}{{ end }}{{ end -}}
+<footer class="colophon"><p>
+  {{- with $updated }}Updated {{ . }} · {{ end -}}
+  Built from LinkedIn with <a href="https://github.com/larsbaunwall/unlinked">unlinked</a> · <a href="https://github.com/larsbaunwall/larsbaunwall.github.io">Source</a>
+</p></footer>

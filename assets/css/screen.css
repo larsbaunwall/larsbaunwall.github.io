@@ -60,7 +60,8 @@
   .langs dd { color: var(--ink-2); margin: 0; }
   .lang { display: contents; }
 
-  .colophon { border-top: 1px solid var(--hair); margin-top: var(--sp-8); padding-block: var(--sp-5) var(--sp-8); font: 400 var(--fs-label)/1.4 var(--font-sans); color: var(--ink-2); }
+  .colophon { margin-top: var(--sp-8); padding-block: 0 var(--sp-8); font: 400 var(--fs-label)/1.4 var(--font-sans); color: var(--ink-2); }
+  .colophon::before { content: ""; display: block; border-top: 1px solid var(--hair); margin-bottom: var(--sp-5); }
 
   .entry:target .entry-body { box-shadow: inset 2px 0 0 var(--ink); padding-left: var(--sp-4); margin-left: calc(-1 * var(--sp-4)); }
 

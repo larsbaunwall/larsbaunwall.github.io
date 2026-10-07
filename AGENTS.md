@@ -112,6 +112,7 @@ Committed, at the repo root. Every field is optional.
 - CSS: `assets/css/base.css` (tokens, fonts, globals), `screen.css` (screen layout, wrapped in `@media screen`), `print.css` (both PDFs, plus a fallback so printing the home page with Cmd+P is reasonable).
 - `cv/masthead.html` and `cv/sections.html` take `dict "cv" $cv "media" "print"` so the print pages can reuse them.
 - Print pages (`content/print/*.md`, `layouts/print/*.html`) are standalone templates with their own head partial (`print/head.html`), so `screen.css` never leaks into them. They are `noindex` and excluded from the sitemap. `@page` rules are inline `<style>` blocks in the templates because they carry dynamic text.
+- The footer (`cv/colophon.html`, screen only) shows the update date and discreet links to unlinked and this repository. Keep it quiet; it is the intended place to credit unlinked.
 - Hyphenation is manual except below 30rem; hyphen-joined tokens containing a digit (e.g. "200-engineer") are wrapped in `.nb` so they never break; define `.nb` in print CSS too.
 
 ### Configuration (`hugo.toml`)
