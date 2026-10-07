@@ -1,0 +1,20 @@
+{{- /*
+  cv/portrait.html
+  Context: dict "media" "screen"|"print" "name" <string> "class" <string>
+  Outputs nothing when assets/profile.{jpg,png} is absent. Grayscale is
+  baked in at build time (no CSS filter). Only processed images reach public/.
+*/ -}}
+{{- $src := or (resources.Get "profile.jpg") (resources.Get "profile.png") -}}
+{{- with $src -}}
+{{- $base := .Fill "640x800 Center" | images.Filter (images.Grayscale) (images.Contrast 8) -}}
+{{- $alt := printf "Portrait of %s" ($.name | default "Lars Baunwall") -}}
+{{- if eq $.media "print" -}}
+{{- $p := $base.Process "jpg q85" -}}
+<img class="{{ $.class }}" src="{{ $p.RelPermalink }}" width="640" height="800" alt="{{ $alt }}">
+{{- else -}}
+{{- $w320 := $base.Resize "320x webp q78" -}}
+{{- $w480 := $base.Resize "480x webp q78" -}}
+{{- $w640 := $base.Resize "640x webp q78" -}}
+<img class="{{ $.class }}" src="{{ $w480.RelPermalink }}" srcset="{{ $w320.RelPermalink }} 320w, {{ $w480.RelPermalink }} 480w, {{ $w640.RelPermalink }} 640w" sizes="(min-width:100rem) 15rem, (min-width:64rem) 12rem, (min-width:40rem) 10rem, 7.5rem" width="640" height="800" fetchpriority="high" decoding="async" alt="{{ $alt }}">
+{{- end -}}
+{{- end -}}

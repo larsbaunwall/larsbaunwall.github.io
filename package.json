@@ -8,9 +8,12 @@
   "scripts": {
     "fetch": "bash scripts/fetch-cv.sh",
     "fetch:sample": "bash scripts/fetch-cv.sh --sample",
+    "normalize": "node scripts/normalize-cv.mjs",
+    "test": "node --test scripts/",
     "dev": "hugo server --disableFastRender",
     "build": "hugo --minify",
     "pdf": "node scripts/render-pdf.mjs",
+    "shoot": "node scripts/shoot.mjs",
     "all": "npm run fetch && npm run build && npm run pdf"
   },
   "devDependencies": {

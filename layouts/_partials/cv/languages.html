@@ -1,5 +1,1 @@
-<ul class="languages">
-{{- range . }}
-  <li><span class="lang-name">{{ .name }}</span>{{ with .proficiency }} <span class="lang-level">— {{ . }}</span>{{ end }}</li>
-{{- end }}
-</ul>
+<dl class="langs">{{ range . }}<div class="lang"><dt>{{ .name }}</dt><dd>{{ .proficiency }}</dd></div>{{ end }}</dl>

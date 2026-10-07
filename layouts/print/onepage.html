@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "en-GB" }}">
+<head>
+{{ partial "print/head.html" . }}
+{{- $cv := hugo.Data.cv }}
+{{- $updated := "" }}{{ with $cv }}{{ with .freshness }}{{ with .asOf }}{{ with try (time.AsTime .) }}{{ with .Value }}{{ $updated = time.Format "January 2006" . }}{{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
+{{- $host := (urls.Parse site.BaseURL).Host }}{{ $upd := "" }}{{ with $updated }}{{ $upd = printf "Updated %s" . }}{{ end }}
+<style>@page{size:A4;margin:14mm 15mm 13mm 15mm;@bottom-left{content:"{{ $upd | safeCSS }}";font:500 7pt/1 Inter,sans-serif;color:#6B6B6B}@bottom-right{content:"Full CV: {{ $host | safeCSS }}";font:400 7pt/1 Inter,sans-serif;color:#6B6B6B}}</style>
+</head>
+<body class="doc doc--onepage">
+{{ if and $cv $cv.normalized -}}
+<main class="op">
+{{ partial "print/onepage-rail.html" (dict "cv" $cv) }}
+{{ partial "print/onepage-main.html" (dict "cv" $cv) }}
+</main>
+{{- else -}}
+{{ errorf "data/cv.json missing or not normalised: run `npm run normalize`" }}
+{{- end }}
+</body>
+</html>

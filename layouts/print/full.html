@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "en-GB" }}">
+<head>
+{{ partial "print/head.html" . }}
+{{- $cv := hugo.Data.cv }}
+{{- $name := "Lars Baunwall" }}{{ with $cv }}{{ with .intro }}{{ $name = .name | default $name }}{{ end }}{{ end }}
+<style>@page{size:A4;margin:18mm 18mm 20mm 18mm;@bottom-left{content:"{{ $name }} — Curriculum Vitae";font:500 7pt/1 Inter,sans-serif;color:#6B6B6B}@bottom-right{content:counter(page) " / " counter(pages);font:400 7pt/1 Inter,sans-serif;color:#6B6B6B;font-variant-numeric:tabular-nums lining-nums}}</style>
+</head>
+<body class="doc doc--full">
+{{ if and $cv $cv.normalized -}}
+<main class="doc-sheet">
+{{ partial "cv/masthead.html" (dict "cv" $cv "media" "print") }}
+{{ partial "cv/sections.html" (dict "cv" $cv "media" "print") }}
+</main>
+{{- else -}}
+{{ errorf "data/cv.json missing or not normalised: run `npm run normalize`" }}
+{{- end }}
+</body>
+</html>

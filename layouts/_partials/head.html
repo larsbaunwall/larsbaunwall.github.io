@@ -1,12 +1,22 @@
 {{- $name := "Lars Baunwall" -}}
-{{- with hugo.Data.cv }}{{ with .intro }}{{ $name = trim (printf "%s %s" (.firstName | default "") (.lastName | default "")) " " | default $name }}{{ end }}{{ end -}}
+{{- with hugo.Data.cv }}{{ with .intro }}{{ $name = .name | default $name }}{{ end }}{{ end -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ $name }} — Curriculum Vitae</title>
+<title>{{ if .Title }}{{ if eq .Kind "home" }}{{ $name }} — Curriculum Vitae{{ else }}{{ .Title }}{{ end }}{{ else }}{{ $name }} — Curriculum Vitae{{ end }}</title>
 <meta name="description" content="{{ site.Params.description }}">
 <meta name="color-scheme" content="light">
+{{ if .Params.noindex }}<meta name="robots" content="noindex">
+{{ end -}}
+<link rel="canonical" href="{{ site.Home.Permalink }}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/inter/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/source-serif-4/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-{{ with resources.Get "css/main.css" | minify | fingerprint -}}
+{{ with resources.Get "css/base.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
-{{- end }}
+{{ end -}}
+{{ with resources.Get "css/screen.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{ end -}}
+{{ with resources.Get "css/print.css" }}{{ with . | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" media="print">
+{{ end }}{{ end -}}

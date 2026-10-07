@@ -1,0 +1,73 @@
+{{- /*
+  cv/sections.html
+  Context: dict "cv" <hugo.Data.cv> "media" "screen"|"print"
+  Renders About, Experience, Other roles, Projects, Publications, Education,
+  Skills, Languages, then non-empty generic sections. Expects normalised data.
+  media is passed through for future differences (currently markup is shared).
+*/ -}}
+{{- $cv := .cv -}}
+{{- with $cv.intro }}{{ with .aboutBlocks }}
+  {{ partial "cv/section.html" (dict "key" "about" "label" "About" "body" (partial "cv/blocks.html" (dict "blocks" . "class" "prose--lede"))) }}
+{{ end }}{{ end }}
+
+{{- with $cv.experience -}}
+  {{- $main := where . "kind" "main" -}}
+  {{- $side := where . "kind" "side" -}}
+  {{- with $main -}}
+    {{- $body := "" -}}
+    {{- range . }}{{ $body = printf "%s%s" $body (partial "cv/entry.html" (dict "id" .id "org" .company "title" .title "when" .when.label "where" .location "blocks" .blocks "facts" .facts)) }}{{ end -}}
+    {{ partial "cv/section.html" (dict "key" "experience" "label" "Experience" "body" ($body | safeHTML)) }}
+  {{- end -}}
+  {{- with $side -}}
+    {{- $body := "" -}}
+    {{- range . }}{{ $body = printf "%s%s" $body (partial "cv/entry.html" (dict "id" .id "org" .company "title" .title "when" .when.label "where" .location "blocks" .blocks "facts" .facts "compact" true)) }}{{ end -}}
+    {{ partial "cv/section.html" (dict "key" "other-roles" "label" "Other roles" "body" ($body | safeHTML)) }}
+  {{- end -}}
+{{- end -}}
+
+{{- with $cv.projects }}
+  {{- $body := "" -}}
+  {{- range . }}{{ $body = printf "%s%s" $body (partial "cv/entry.html" (dict "id" .id "title" .name "url" .url "sub" .subtitle "when" .when.label "blocks" .blocks "facts" .facts)) }}{{ end -}}
+  {{ partial "cv/section.html" (dict "key" "projects" "label" "Projects" "body" ($body | safeHTML)) }}
+{{- end -}}
+
+{{- with $cv.publications }}
+  {{- $body := "" -}}
+  {{- range . }}{{ $body = printf "%s%s" $body (partial "cv/entry.html" (dict "title" .name "url" .url "sub" .publisher "when" .when.label)) }}{{ end -}}
+  {{ partial "cv/section.html" (dict "key" "publications" "label" "Publications" "body" ($body | safeHTML)) }}
+{{- end -}}
+
+{{- with $cv.education }}
+  {{- $body := "" -}}
+  {{- range . }}{{ $body = printf "%s%s" $body (partial "cv/entry.html" (dict "id" .id "org" .schoolName "title" .degreeName "when" .when.label "blocks" .blocks "facts" .facts)) }}{{ end -}}
+  {{ partial "cv/section.html" (dict "key" "education" "label" "Education" "body" ($body | safeHTML)) }}
+{{- end -}}
+
+{{- with $cv.skills }}
+  {{ partial "cv/section.html" (dict "key" "skills" "label" "Skills" "body" (partial "cv/skills.html" .)) }}
+{{- end -}}
+
+{{- with $cv.languages }}
+  {{ partial "cv/section.html" (dict "key" "languages" "label" "Languages" "body" (partial "cv/languages.html" .)) }}
+{{- end -}}
+
+{{- range slice
+    (dict "key" "certifications" "label" "Certifications")
+    (dict "key" "volunteering" "label" "Volunteering")
+    (dict "key" "honors" "label" "Honours and awards")
+    (dict "key" "courses" "label" "Courses")
+    (dict "key" "organizations" "label" "Organisations") }}
+  {{- $key := .key -}}{{- $label := .label -}}
+  {{- with index $cv $key }}
+    {{- $body := "" -}}
+    {{- range . }}
+      {{- $title := .name | default .title | default .degreeName | default "" -}}
+      {{- $org := .authority | default .issuer | default .companyName | default .organization | default "" -}}
+      {{- $text := .description | default .notes | default "" -}}
+      {{- $blocks := .blocks | default (cond (ne $text "") (slice (dict "type" "p" "text" $text)) slice) -}}
+      {{- $when := "" -}}{{- with .when }}{{ $when = .label }}{{ end -}}
+      {{- $body = printf "%s%s" $body (partial "cv/entry.html" (dict "org" $org "title" $title "url" .url "when" $when "blocks" $blocks "facts" .facts)) -}}
+    {{- end -}}
+    {{ partial "cv/section.html" (dict "key" $key "label" $label "body" ($body | safeHTML)) }}
+  {{- end }}
+{{- end -}}

@@ -1,39 +1,12 @@
 {{ define "main" }}
 {{ $cv := hugo.Data.cv }}
-{{ if $cv }}
-  {{ partial "cv/header.html" $cv }}
-  {{ with $cv.intro }}{{ with .about }}
-    {{ partial "cv/section.html" (dict "label" "About" "id" "about" "content" (partial "cv/paragraphs.html" .)) }}
-  {{ end }}{{ end }}
-  {{ with $cv.experience }}
-    {{ partial "cv/section.html" (dict "label" "Experience" "id" "experience" "content" (partial "cv/experience.html" .)) }}
-  {{ end }}
-  {{ range slice
-      (dict "key" "education" "label" "Education")
-      (dict "key" "certifications" "label" "Certifications")
-      (dict "key" "projects" "label" "Projects")
-      (dict "key" "skills" "label" "Skills")
-      (dict "key" "languages" "label" "Languages")
-      (dict "key" "volunteering" "label" "Volunteering")
-      (dict "key" "honors" "label" "Honors &amp; awards")
-      (dict "key" "publications" "label" "Publications")
-      (dict "key" "courses" "label" "Courses")
-      (dict "key" "organizations" "label" "Organizations") }}
-    {{ $key := .key }}{{ $label := .label }}
-    {{ with index $cv $key }}
-      {{ $content := "" }}
-      {{ if eq $key "skills" }}
-        {{ $content = partial "cv/skills.html" . }}
-      {{ else if eq $key "languages" }}
-        {{ $content = partial "cv/languages.html" . }}
-      {{ else }}
-        {{ $content = partial "cv/entries.html" . }}
-      {{ end }}
-      {{ partial "cv/section.html" (dict "label" ($label | safeHTML) "id" $key "content" $content) }}
-    {{ end }}
-  {{ end }}
+{{ if and $cv $cv.normalized }}
+  {{ partial "cv/masthead.html" (dict "cv" $cv "media" "screen") }}
+  {{ partial "cv/sections.html" (dict "cv" $cv "media" "screen") }}
 {{ else if hugo.IsProduction }}
-  {{ errorf "data/cv.json missing: run `npm run fetch` (or `npm run fetch:sample`) before building" }}
+  {{ if $cv }}{{ errorf "data/cv.json is not normalised: run `npm run normalize`" }}{{ else }}{{ errorf "data/cv.json missing: run `npm run fetch` (or `npm run fetch:sample`) before building" }}{{ end }}
+{{ else if $cv }}
+  <p class="missing">CV data not normalised: run <code>npm run normalize</code>.</p>
 {{ else }}
   <p class="missing">CV data missing. Run <code>npm run fetch</code>.</p>
 {{ end }}

@@ -1,0 +1,31 @@
+{{- /*
+  cv/masthead.html
+  Context: dict "cv" <hugo.Data.cv> "media" "screen"|"print"
+  media=print omits the PDF download links; everything else is identical so
+  the print CSS can restyle the same markup. Contact URLs are always emitted
+  (.contact-url); screen CSS hides them, print CSS shows them.
+*/ -}}
+{{- $cv := .cv -}}
+{{- $media := .media | default "screen" -}}
+{{- with $cv.intro -}}
+{{- $email := site.Params.email -}}
+<header class="masthead">
+  <div class="masthead-aside">
+    {{ partial "cv/portrait.html" (dict "media" $media "name" .name "class" "portrait-img") }}
+    <address class="contact">
+      <ul role="list">
+        {{ with .geoLocation }}<li>{{ . }}</li>{{ end }}
+        {{ range site.Params.links }}<li><a href="{{ .url }}"><span class="contact-label">{{ .label }}</span><span class="contact-url">{{ .display | default .label }}</span></a></li>
+        {{ end }}
+        {{ with $email }}<li><a href="mailto:{{ . }}"><span class="contact-label">Email</span><span class="contact-url">{{ . }}</span></a></li>{{ end }}
+      </ul>
+    </address>
+  </div>
+  <div class="masthead-text">
+    <h1 class="name">{{ .name | default site.Title }}</h1>
+    {{ with .tagline }}<p class="tagline">{{ . }}</p>{{ end }}
+    {{ with .facets }}<ul class="facets" role="list">{{ range . }}<li>{{ . | htmlEscape | replaceRE `(\S*\d-\S+)` `<span class="nb">$1</span>` | safeHTML }}</li>{{ end }}</ul>{{ end }}
+    {{ if ne $media "print" }}{{ partial "cv/downloads.html" . }}{{ end }}
+  </div>
+</header>
+{{- end -}}

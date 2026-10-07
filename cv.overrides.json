@@ -1,0 +1,18 @@
+{
+  "companyNames": {
+    "Champagne_Moments": "Champagne Moments",
+    "LEGO Group": "the LEGO Group"
+  },
+  "sideRoles": null,
+  "summary": null,
+  "onepage": {
+    "detailedRoles": 2,
+    "maxRoles": 8,
+    "maxHighlights": 3,
+    "skills": 12,
+    "projects": 3,
+    "highlights": {
+      "Danske Bank|Mar 2024": [0, 2, 4]
+    }
+  }
+}

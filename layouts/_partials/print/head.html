@@ -1,0 +1,15 @@
+{{- /* print/head.html: head for standalone print pages. Context: page. Does not load screen.css. */ -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ .Title }}</title>
+<meta name="description" content="{{ site.Params.description }}">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{{ site.Home.Permalink }}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+{{ with resources.Get "css/base.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{ end -}}
+{{ with resources.Get "css/print.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{ end -}}

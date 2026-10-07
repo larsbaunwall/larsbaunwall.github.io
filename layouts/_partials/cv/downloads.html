@@ -1,0 +1,6 @@
+{{- with site.Params.pdf -}}
+<ul class="downloads" role="list">
+  {{ with .full }}<li><a href="/{{ . }}" download type="application/pdf">Download CV (PDF)</a></li>{{ end }}
+  {{ with .onepage }}<li><a href="/{{ . }}" download type="application/pdf">One-page summary (PDF)</a></li>{{ end }}
+</ul>
+{{- end -}}

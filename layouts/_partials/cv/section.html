@@ -1,4 +1,10 @@
-<section class="cv-section" id="{{ .id }}">
-  <h2 class="cv-label">{{ .label }}</h2>
-  <div class="cv-body">{{ .content }}</div>
+{{- /*
+  cv/section.html
+  Context: dict key, label, body (rendered HTML from a partial)
+*/ -}}
+<section class="section section--{{ .key }}" id="{{ .key }}" aria-labelledby="{{ .key }}-h">
+  <div class="section-head"><h2 class="section-label" id="{{ .key }}-h">{{ .label }}</h2></div>
+  <div class="section-body">
+{{ .body }}
+  </div>
 </section>

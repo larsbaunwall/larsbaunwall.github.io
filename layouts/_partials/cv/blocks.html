@@ -1,0 +1,16 @@
+{{- /*
+  cv/blocks.html
+  Context: dict "blocks" <[{type:p,text}|{type:ul,items}]> "class" <extra class on .prose>
+  Text is escaped by Hugo (no safeHTML). Emits nothing for empty blocks.
+*/ -}}
+{{- with .blocks -}}
+<div class="prose{{ with $.class }} {{ . }}{{ end }}">
+{{- range . -}}
+  {{- if eq .type "ul" -}}
+  <ul class="bullets" role="list">{{ range .items }}<li>{{ . }}</li>{{ end }}</ul>
+  {{- else -}}
+  <p>{{ .text }}</p>
+  {{- end -}}
+{{- end -}}
+</div>
+{{- end -}}

@@ -1,0 +1,38 @@
+{{- /* print/onepage-main.html. Context: dict "cv" <cv> */ -}}
+{{- $cv := .cv -}}
+<div class="op-main">
+  <header class="op-head">
+    <h1 class="op-name">{{ $cv.intro.name }}</h1>
+    {{ with $cv.intro.tagline }}<p class="op-tagline">{{ . }}</p>{{ end }}
+    {{ with $cv.intro.facets }}<ul class="op-facets" role="list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+  </header>
+  {{ with $cv.intro.summary }}<div class="op-summary">{{ range . }}<p>{{ . }}</p>{{ end }}</div>{{ end }}
+  {{ with $cv.onepage.roles }}
+  <section class="op-section op-experience">
+    <h2 class="op-label">Experience</h2>
+    {{ range . }}{{ if .detailed }}
+    <article class="op-role">
+      <div class="op-role-head">
+        <div class="op-role-id"><span class="op-org">{{ .company }}</span><span class="op-title">{{ .title }}</span></div>
+        <span class="op-years">{{ .years }}</span>
+      </div>
+      {{ with .lead }}<p class="op-lead">{{ . }}</p>{{ end }}
+      {{ with .highlights }}<ul class="op-bullets" role="list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+    </article>
+    {{ end }}{{ end }}
+    <ol class="op-compact" role="list">
+      {{ range . }}{{ if not .detailed }}<li><span class="op-c-name"><span class="op-title">{{ .title }}</span>, <span class="op-org">{{ .company }}</span></span><span class="op-years">{{ .years }}</span></li>
+      {{ end }}{{ end }}
+    </ol>
+  </section>
+  {{ end }}
+  {{ with $cv.onepage.projects }}
+  <section class="op-section op-projects">
+    <h2 class="op-label">Selected projects</h2>
+    <ul class="op-proj" role="list">
+      {{ range . }}<li><span class="op-c-name"><span class="op-pname">{{ .name }}</span>{{ with .subtitle }} — {{ . }}{{ end }}</span><span class="op-years">{{ .years }}</span></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+</div>

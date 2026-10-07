@@ -7,3 +7,4 @@ resources/_gen/
 .hugo_build.lock
 data/cv.json
 *.pdf
+assets/profile.png

@@ -10,6 +10,7 @@ if [[ "${1:-}" == "--sample" ]]; then
   mkdir -p data
   cp scripts/fixtures/cv.sample.json data/cv.json
   echo "Using sample CV data"
+  node scripts/normalize-cv.mjs
   exit 0
 fi
 
@@ -42,3 +43,4 @@ console.log(`CV fetched: ${n("experience")} positions, ${n("education")} educati
 
 mkdir -p data
 mv "$tmp" data/cv.json
+node scripts/normalize-cv.mjs

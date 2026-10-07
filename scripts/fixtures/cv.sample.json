@@ -24,6 +24,13 @@
       "finishedOn": "Dec 2021"
     },
     {
+      "companyName": "Alpine Ventures",
+      "title": "Advisory Board, technology advisor",
+      "description": "Advised the founders on platform architecture and hiring.  – Reviewed the 2019 technical due diligence – Coached two first-time engineering managers  – Sat on the quarterly board review  Stack: Kubernetes, Postgres, Kafka.  Internal title: Technical Advisor",
+      "startedOn": "Aug 2018",
+      "finishedOn": "Dec 2022"
+    },
+    {
       "companyName": "Contoso Systems",
       "title": "Principal Engineer",
       "description": "Designed event-driven ingestion handling 2B events per day.\n* Mentored eight engineers\n* Wrote the internal architecture guidelines",
@@ -166,6 +173,12 @@
       "description": "A personal blog about engineering management.",
       "startedOn": "Jan 2015",
       "finishedOn": "Dec 2017"
+    },
+    {
+      "title": "Quill – a tiny static site generator",
+      "description": "Weekend experiment that generates a site from Markdown.",
+      "startedOn": "Feb 2023",
+      "finishedOn": "Feb 2023"
     }
   ],
   "languages": [
@@ -184,5 +197,13 @@
   ],
   "freshness": {
     "asOf": "2026-01-15T08:00:00Z"
-  }
+  },
+  "publications": [
+    {
+      "name": "Small steps, steady teams",
+      "publisher": "Example Press",
+      "publishedOn": "Mar 1, 2026",
+      "url": "https://example.com/small-steps"
+    }
+  ]
 }

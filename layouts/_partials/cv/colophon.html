@@ -1,0 +1,3 @@
+{{- with hugo.Data.cv }}{{ with .freshness }}{{ with .asOf }}{{ with try (time.AsTime .) }}{{ with .Value -}}
+<footer class="colophon"><p>Updated {{ time.Format "2 January 2006" . }}</p></footer>
+{{- end }}{{ end }}{{ end }}{{ end }}{{ end -}}

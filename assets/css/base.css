@@ -1,0 +1,27 @@
+/* base.css: tokens, fonts and globals shared by screen and print. */
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter/inter-latin-opsz-normal.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter/inter-latin-ext-wght-normal.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:200 900;font-display:swap;src:url(/fonts/source-serif-4/source-serif-4-latin-wght-normal.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:200 900;font-display:swap;src:url(/fonts/source-serif-4/source-serif-4-latin-ext-wght-normal.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Source Serif 4";font-style:italic;font-weight:200 900;font-display:swap;src:url(/fonts/source-serif-4/source-serif-4-latin-wght-italic.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif 4";font-style:italic;font-weight:200 900;font-display:swap;src:url(/fonts/source-serif-4/source-serif-4-latin-ext-wght-italic.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{--font-sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--font-serif:"Source Serif 4",Charter,"Iowan Old Style",Georgia,serif;
+--ink:#111;--ink-2:#5E5E5E;--rule:#111;--hair:#E3E3E3;--paper:#FFF;--wash:#F2F2F2;
+--fs-label:.8125rem;--fs-meta:.875rem;--fs-body:clamp(1.0625rem,.99rem + .25vw,1.1875rem);--fs-lede:clamp(1.1875rem,1.05rem + .45vw,1.375rem);--fs-title:clamp(1.1875rem,1.1rem + .3vw,1.375rem);--fs-tagline:clamp(1.375rem,1.2rem + .7vw,1.75rem);--fs-display:clamp(2.75rem,1.5rem + 4.6vw,5.25rem);
+--lh-body:1.55;--lh-title:1.25;--lh-display:.95;--sp-1:.25rem;--sp-2:.5rem;--sp-3:.75rem;--sp-4:1rem;--sp-5:1.5rem;--sp-6:2rem;--sp-7:3rem;--sp-8:4rem;--sp-9:6rem;--rail:12rem;--gutter:4rem;--measure:38rem;--pad:clamp(1.25rem,4vw,4rem)}
+@media (min-width:100rem){:root{--rail:15rem;--gutter:6rem;--measure:40rem}}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:var(--sp-6);font-optical-sizing:auto;font-synthesis:none}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 var(--fs-body)/var(--lh-body) var(--font-serif);font-kerning:normal;-webkit-font-smoothing:antialiased;hyphens:manual;hanging-punctuation:first allow-end;font-variant-numeric:oldstyle-nums proportional-nums}
+::selection{background:#111;color:#fff}
+h1,h2,h3,p,ul,ol,dl,dd,figure,address{margin:0}
+address{font-style:normal}
+ul[role=list],ol[role=list]{list-style:none;padding:0}
+img{max-width:100%}
+.name,.tagline,.facets li,.entry-title{text-wrap:balance}
+p,li{text-wrap:pretty}
+.when,.where,.index,.contact,.facts,.langs{font-variant-numeric:tabular-nums lining-nums}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;text-decoration-color:#B3B3B3}
+a:hover{text-decoration-color:currentColor;text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}

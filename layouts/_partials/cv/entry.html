@@ -1,13 +1,14 @@
-{{- $primary := .degreeName | default .name | default .title | default .schoolName | default .companyName | default "" -}}
-{{- $secondary := .schoolName | default .authority | default .companyName | default .publisher | default .issuer | default "" -}}
-{{- if eq $secondary $primary }}{{ $secondary = "" }}{{ end -}}
-{{- $text := .notes | default .description -}}
-<div class="entry">
-  <div class="role-head">
-    <span class="entry-primary">{{ with .url }}<a href="{{ . }}">{{ $primary }}</a>{{ else }}{{ $primary }}{{ end }}</span>
-    <span class="dates">{{ partial "cv/date-range.html" . }}</span>
+{{- /*
+  cv/entry.html
+  Context: dict id, org, title, url, sub, when, where, blocks, facts, compact(bool)
+  All keys optional. The .entry-when div is always emitted to keep grid columns.
+*/ -}}
+<article class="entry{{ if .compact }} entry--compact{{ end }}"{{ with .id }} id="{{ . }}"{{ end }}>
+  <div class="entry-when">{{ with .when }}<span class="when">{{ . }}</span>{{ end }}{{ with .where }}<span class="where">{{ . }}</span>{{ end }}</div>
+  <div class="entry-body">
+    <h3 class="entry-head">{{ with .org }}<span class="entry-org">{{ . }}</span>{{ end }}{{ with .title }}<span class="entry-title">{{ with $.url }}<a href="{{ . }}">{{ $.title }}</a>{{ else }}{{ . }}{{ end }}</span>{{ end }}</h3>
+    {{ with .sub }}<p class="entry-sub">{{ . }}</p>{{ end }}
+    {{ partial "cv/blocks.html" (dict "blocks" .blocks) }}
+    {{ partial "cv/facts.html" .facts }}
   </div>
-  {{ with $secondary }}<p class="role-meta">{{ . }}</p>{{ end }}
-  {{ with $text }}<div class="role-desc">{{ partial "cv/paragraphs.html" . }}</div>{{ end }}
-  {{ with .activities }}<div class="role-desc">{{ partial "cv/paragraphs.html" . }}</div>{{ end }}
-</div>
+</article>

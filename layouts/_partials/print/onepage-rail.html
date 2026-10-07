@@ -1,0 +1,32 @@
+{{- /* print/onepage-rail.html. Context: dict "cv" <cv> */ -}}
+{{- $cv := .cv -}}
+<aside class="op-rail">
+  {{ partial "cv/portrait.html" (dict "media" "print" "name" $cv.intro.name "class" "op-portrait") }}
+  <section class="op-block op-contact">
+    <h2 class="op-label">Contact</h2>
+    <ul role="list">
+      {{ with $cv.intro.geoLocation }}<li>{{ . }}</li>{{ end }}
+      {{ range site.Params.links }}<li>{{ .display | default .label }}</li>
+      {{ end }}
+      {{ with site.Params.email }}<li>{{ . }}</li>{{ end }}
+    </ul>
+  </section>
+  {{ with $cv.languages }}
+  <section class="op-block op-langs">
+    <h2 class="op-label">Languages</h2>
+    <ul role="list">{{ range . }}<li>{{ .name }} <span class="op-muted">{{ .levelShort }}</span></li>{{ end }}</ul>
+  </section>
+  {{ end }}
+  {{ with $cv.education }}
+  <section class="op-block op-edu">
+    <h2 class="op-label">Education</h2>
+    <ul role="list">{{ range . }}<li><span class="op-edu-degree">{{ .degreeName }}</span><span class="op-edu-school">{{ .schoolName }}</span><span class="op-muted">{{ .when.years | default .when.label }}</span></li>{{ end }}</ul>
+  </section>
+  {{ end }}
+  {{ with $cv.onepage.skills }}
+  <section class="op-block op-skills">
+    <h2 class="op-label">Skills</h2>
+    <ul role="list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+  </section>
+  {{ end }}
+</aside>

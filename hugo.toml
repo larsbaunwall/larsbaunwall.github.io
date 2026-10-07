@@ -1,18 +1,28 @@
 baseURL = "https://larsbaunwall.github.io/"
-locale = "en"
+locale = "en-GB"
 title = "Lars Baunwall"
 disableKinds = ["taxonomy", "term", "RSS", "section"]
 enableRobotsTXT = true
 
 [params]
   description = "Curriculum vitae of Lars Baunwall"
-  pdfFile = "lars-baunwall-cv.pdf"
+  # Optional: shown in the contact block on the page and in both PDFs.
+  email = ""
+  [params.pdf]
+    full = "lars-baunwall-cv.pdf"
+    onepage = "lars-baunwall-cv-onepage.pdf"
   [[params.links]]
     label = "LinkedIn"
+    display = "linkedin.com/in/larsbaunwall"
     url = "https://www.linkedin.com/in/larsbaunwall/"
   [[params.links]]
     label = "GitHub"
+    display = "github.com/larsbaunwall"
     url = "https://github.com/larsbaunwall"
+
+[imaging]
+  resampleFilter = "Lanczos"
+  quality = 82
 
 [module]
   [[module.mounts]]
