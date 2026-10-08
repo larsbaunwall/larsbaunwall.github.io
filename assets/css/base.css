@@ -8,7 +8,7 @@
 
 :root{--font-sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--font-serif:"Source Serif 4",Charter,"Iowan Old Style",Georgia,serif;
 --ink:#111;--ink-2:#5E5E5E;--rule:#111;--hair:#E3E3E3;--paper:#FFF;--wash:#F2F2F2;
---fs-label:.8125rem;--fs-meta:.875rem;--fs-body:clamp(1.0625rem,.99rem + .25vw,1.1875rem);--fs-lede:clamp(1.1875rem,1.05rem + .45vw,1.375rem);--fs-title:clamp(1.1875rem,1.1rem + .3vw,1.375rem);--fs-tagline:clamp(1.375rem,1.2rem + .7vw,1.75rem);--fs-display:clamp(2.75rem,1.5rem + 4.6vw,5.25rem);
+--fs-label:.8125rem;--fs-meta:.875rem;--fs-body:clamp(1rem,.95rem + .2vw,1.0937rem);--fs-lede:clamp(1.0625rem,1rem + .25vw,1.1875rem);--fs-title:clamp(1.125rem,1.05rem + .3vw,1.3125rem);--fs-tagline:clamp(1.375rem,1.2rem + .7vw,1.75rem);--fs-display:clamp(2.75rem,1.5rem + 4.6vw,5.25rem);
 --lh-body:1.55;--lh-title:1.25;--lh-display:.95;--sp-1:.25rem;--sp-2:.5rem;--sp-3:.75rem;--sp-4:1rem;--sp-5:1.5rem;--sp-6:2rem;--sp-7:3rem;--sp-8:4rem;--sp-9:6rem;--rail:12rem;--gutter:4rem;--measure:38rem;--pad:clamp(1.25rem,4vw,4rem)}
 @media (min-width:100rem){:root{--rail:15rem;--gutter:6rem;--measure:40rem}}
 *,*::before,*::after{box-sizing:border-box}

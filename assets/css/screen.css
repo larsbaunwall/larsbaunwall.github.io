@@ -51,7 +51,7 @@
   .entry--compact .prose { font-size: .9375em; color: var(--ink-2); }
   .entry + .entry--compact { margin-top: var(--sp-6); }
 
-  .prose--lede { font-size: var(--fs-lede); line-height: 1.5; margin-top: 0; }
+  .prose--lede { font-size: var(--fs-lede); line-height: 1.55; margin-top: 0; }
   .prose--lede p + p { margin-top: 1em; }
 
   .index { columns: 14rem 2; column-gap: var(--sp-6); list-style: none; padding: 0; font: 400 var(--fs-meta)/1.75 var(--font-sans); }
