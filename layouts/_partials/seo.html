@@ -1,0 +1,79 @@
+{{- /*
+  seo.html: description, Open Graph, Twitter card and schema.org JSON-LD for the home page.
+  Everything is derived from data/cv.json and hugo.toml; nothing is invented.
+*/ -}}
+{{- $cv := hugo.Data.cv -}}
+{{- $name := site.Title -}}
+{{- $tagline := "" -}}
+{{- $facet := "" -}}
+{{- $geo := "" -}}
+{{- with $cv }}{{ with .intro -}}
+  {{- $name = .name | default $name -}}
+  {{- $tagline = .tagline | default "" -}}
+  {{- with .facets }}{{ $facet = index . 0 }}{{ end -}}
+  {{- $geo = .geoLocation | default "" -}}
+{{- end }}{{ end -}}
+{{- $desc := site.Params.description -}}
+{{- if $tagline -}}
+  {{- $desc = printf "%s, %s." $name (lower $tagline) -}}
+  {{- with $facet }}{{ $desc = printf "%s %s." $desc (strings.TrimRight "." .) }}{{ end -}}
+  {{- with $geo }}{{ $desc = printf "%s Location: %s." $desc . }}{{ end -}}
+{{- end -}}
+{{- $desc = $desc | plainify | truncate 200 -}}
+{{- $title := printf "%s — %s, Curriculum Vitae" $name $tagline -}}
+{{- if not $tagline }}{{ $title = printf "%s — Curriculum Vitae" $name }}{{ end -}}
+{{- $image := "" -}}
+{{- $src := or (resources.Get "profile.jpg") (resources.Get "profile.png") -}}
+{{- with $src -}}
+  {{- $og := .Fill "1200x630 Smart" | images.Filter (images.Grayscale) (images.Contrast 8) | resources.Copy "og-image.jpg" -}}
+  {{- $image = ($og.Process "jpg q82").Permalink -}}
+{{- end -}}
+<meta name="description" content="{{ $desc }}">
+<meta name="author" content="{{ $name }}">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="{{ $name }}">
+<meta property="og:locale" content="{{ replace site.Language.Locale "-" "_" }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ site.Home.Permalink }}">
+{{ with $cv }}{{ with .intro }}{{ with .firstName }}<meta property="profile:first_name" content="{{ . }}">
+{{ end }}{{ with .lastName }}<meta property="profile:last_name" content="{{ . }}">
+{{ end }}{{ end }}{{ end -}}
+{{ with $image }}<meta property="og:image" content="{{ . }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Portrait of {{ $name }}">
+{{ end -}}
+<meta name="twitter:card" content="{{ if $image }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+{{ with $image }}<meta name="twitter:image" content="{{ . }}">
+{{ end -}}
+{{- /* JSON-LD */ -}}
+{{- $sameAs := slice -}}
+{{- range site.Params.links }}{{ $sameAs = $sameAs | append .url }}{{ end -}}
+{{- $person := dict "@type" "Person" "@id" (printf "%s#person" site.Home.Permalink) "name" $name "url" site.Home.Permalink -}}
+{{- with $tagline }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end -}}
+{{- with $desc }}{{ $person = merge $person (dict "description" .) }}{{ end -}}
+{{- with $image }}{{ $person = merge $person (dict "image" .) }}{{ end -}}
+{{- with $geo }}{{ $person = merge $person (dict "homeLocation" (dict "@type" "Place" "name" .)) }}{{ end -}}
+{{- with site.Params.email }}{{ $person = merge $person (dict "email" .) }}{{ end -}}
+{{- with $cv -}}
+  {{- with .intro }}{{ with .firstName }}{{ $person = merge $person (dict "givenName" .) }}{{ end }}{{ with .lastName }}{{ $person = merge $person (dict "familyName" .) }}{{ end }}{{ end -}}
+  {{- range .experience }}{{ if and .current (not $person.worksFor) }}{{ with .companyName }}{{ $person = merge $person (dict "worksFor" (dict "@type" "Organization" "name" .)) }}{{ end }}{{ end }}{{ end -}}
+  {{- $schools := slice -}}
+  {{- range .education }}{{ with .schoolName }}{{ $schools = $schools | append (dict "@type" "EducationalOrganization" "name" .) }}{{ end }}{{ end -}}
+  {{- with $schools }}{{ $person = merge $person (dict "alumniOf" .) }}{{ end -}}
+  {{- $skills := slice -}}
+  {{- range first 15 .skills }}{{ with .name }}{{ $skills = $skills | append . }}{{ end }}{{ end -}}
+  {{- with $skills }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end -}}
+  {{- $langs := slice -}}
+  {{- range .languages }}{{ with .name }}{{ $langs = $langs | append (dict "@type" "Language" "name" .) }}{{ end }}{{ end -}}
+  {{- with $langs }}{{ $person = merge $person (dict "knowsLanguage" .) }}{{ end -}}
+{{- end -}}
+{{- with $sameAs }}{{ $person = merge $person (dict "sameAs" .) }}{{ end -}}
+{{- $site := dict "@type" "WebSite" "@id" (printf "%s#website" site.Home.Permalink) "url" site.Home.Permalink "name" $name "inLanguage" site.Language.Locale -}}
+{{- $page := dict "@type" "ProfilePage" "@id" (printf "%s#profilepage" site.Home.Permalink) "url" site.Home.Permalink "name" $title "description" $desc "inLanguage" site.Language.Locale "isPartOf" (dict "@id" (index $site "@id")) "mainEntity" (dict "@id" (index $person "@id")) -}}
+{{- with $image }}{{ $page = merge $page (dict "primaryImageOfPage" (dict "@type" "ImageObject" "url" .)) }}{{ end -}}
+{{- with hugo.Data.cv }}{{ with .freshness }}{{ with .asOf }}{{ $page = merge $page (dict "dateModified" .) }}{{ end }}{{ end }}{{ end -}}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" (slice $site $page $person) | jsonify | safeJS }}</script>

@@ -2,13 +2,18 @@
 {{- with hugo.Data.cv }}{{ with .intro }}{{ $name = .name | default $name }}{{ end }}{{ end -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if .Title }}{{ if eq .Kind "home" }}{{ $name }} — Curriculum Vitae{{ else }}{{ .Title }}{{ end }}{{ else }}{{ $name }} — Curriculum Vitae{{ end }}</title>
-<meta name="description" content="{{ site.Params.description }}">
+{{- $tagline := "" -}}
+{{- with hugo.Data.cv }}{{ with .intro }}{{ $tagline = .tagline | default "" }}{{ end }}{{ end -}}
+<title>{{ $name }} — {{ with $tagline }}{{ . }}, {{ end }}Curriculum Vitae</title>
+{{ partial "seo.html" . }}
 <meta name="color-scheme" content="light dark">
 {{ if .Params.noindex }}<meta name="robots" content="noindex">
+{{ else }}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 {{ end -}}
 <link rel="canonical" href="{{ site.Home.Permalink }}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="alternate" type="application/pdf" href="/{{ site.Params.pdf.full }}" title="{{ $name }} — CV (PDF)">
 <link rel="preload" href="/fonts/inter/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/source-serif-4/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 {{ with resources.Get "css/base.css" | minify | fingerprint -}}

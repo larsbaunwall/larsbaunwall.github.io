@@ -4,8 +4,7 @@
 <title>{{ .Title }}</title>
 <meta name="description" content="{{ site.Params.description }}">
 <meta name="color-scheme" content="light">
-<meta name="robots" content="noindex">
-<link rel="canonical" href="{{ site.Home.Permalink }}">
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 {{ with resources.Get "css/base.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
