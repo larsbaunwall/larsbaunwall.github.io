@@ -13,8 +13,8 @@ enableRobotsTXT = true
     onepage = "lars-baunwall-cv-onepage.pdf"
   [[params.links]]
     label = "LinkedIn"
-    display = "linkedin.com/in/larsbaunwall"
-    url = "https://www.linkedin.com/in/larsbaunwall/"
+    display = "linkedin.com/in/larslb"
+    url = "https://www.linkedin.com/in/larslb/"
   [[params.links]]
     label = "GitHub"
     display = "github.com/larsbaunwall"
